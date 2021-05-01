@@ -13,4 +13,8 @@
     <ItemGroup>
         <PackageReference Include="Xamarin.Forms" Version="4.4.0.991640" />
     </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\DiscoveryTest.Core\DiscoveryTest.Core.csproj" />
+    </ItemGroup>
 </Project>

@@ -69,10 +69,10 @@
         <AndroidResource Include="Resources\values\colors.xml" />
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\DiscoveryTest\DiscoveryTest.csproj">
-            <Project>{1DB603BC-F394-415F-BF5E-172AB383450C}</Project>
-            <Name>DiscoveryTest</Name>
-        </ProjectReference>
+      <ProjectReference Include="..\DiscoveryTest.Forms\DiscoveryTest.Forms.csproj">
+        <Project>{ce9fed4e-5c65-4815-9e56-6a11307cbbfc}</Project>
+        <Name>DiscoveryTest.Forms</Name>
+      </ProjectReference>
     </ItemGroup>
     <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
