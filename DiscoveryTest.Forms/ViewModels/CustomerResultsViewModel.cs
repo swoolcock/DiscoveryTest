@@ -1,7 +1,7 @@
-using System;
 using System.Collections.ObjectModel;
 using DiscoveryTest.Core.Model;
 using DiscoveryTest.Core.Services;
+using DiscoveryTest.Forms.Views;
 using DryIoc;
 using Xamarin.Forms;
 
@@ -21,14 +21,15 @@ namespace DiscoveryTest.Forms.ViewModels
         private Command customerTappedCommand;
         public Command CustomerTapped => customerTappedCommand ??= new Command(performCustomerTapped);
         
+        private Command searchCommand;
+        public Command Search => searchCommand ??= new Command(performSearch);
+        
         public CustomerResultsViewModel(INavigation navigation, string parkCode, string arriving) : base(navigation)
         {
             ParkCode = parkCode;
             Arriving = arriving;
 
             restService = App.Dependencies.Resolve<IRestService>();
-
-            performSearch();
         }
 
         private async void performSearch()

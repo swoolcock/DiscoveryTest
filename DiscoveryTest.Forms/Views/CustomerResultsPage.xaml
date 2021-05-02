@@ -4,6 +4,11 @@
              xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
              x:Class="DiscoveryTest.Forms.Views.CustomerResultsPage"
              Title="{Binding Title}">
+    <ContentPage.Behaviors>
+        <behaviors:EventHandlerBehavior EventName="Appearing">
+            <behaviors:InvokeCommandAction Command="{Binding Search}" />
+        </behaviors:EventHandlerBehavior>
+    </ContentPage.Behaviors>
     <ListView ItemsSource="{Binding Customers}" Visual="Material" SelectionMode="None">
         <ListView.Behaviors>
             <behaviors:EventHandlerBehavior EventName="ItemTapped">
