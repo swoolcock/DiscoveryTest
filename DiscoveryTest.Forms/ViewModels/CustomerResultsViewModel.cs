@@ -43,7 +43,7 @@ namespace DiscoveryTest.Forms.ViewModels
         private async void performCustomerTapped(object data)
         {
             var customer = (CustomerDTO)data;
-            Console.WriteLine(customer.Title);
+            await Navigation.PushAsync(new SubmitResponsePage(customer));
         }
     }
 }
