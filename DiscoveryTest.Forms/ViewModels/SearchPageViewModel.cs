@@ -1,4 +1,5 @@
-using System.Text.RegularExpressions;
+using System;
+using System.Globalization;
 using DiscoveryTest.Forms.Views;
 using Xamarin.Forms;
 
@@ -31,11 +32,17 @@ namespace DiscoveryTest.Forms.ViewModels
         
         private async void performSearch()
         {
-            // TODO: display error messages for validation
-            if (string.IsNullOrWhiteSpace(ParkCode)) return;
-            if (string.IsNullOrWhiteSpace(Arriving)) return;
-            if (!Regex.IsMatch(Arriving, "^\\d{4}-\\d{2}-\\d{2}$")) return;
-            await Navigation.PushAsync(new CustomerResultsPage(ParkCode.ToUpper(), Arriving));
+            if (IsBusy) return;
+            using (MakeBusy())
+            {
+                // TODO: display error messages for validation
+                if (string.IsNullOrWhiteSpace(ParkCode)) return;
+                if (string.IsNullOrWhiteSpace(Arriving)) return;
+                if (!DateTime.TryParseExact(Arriving, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out _)) return;
+
+                // if (!Regex.IsMatch(Arriving, "^\\d{4}-\\d{2}-\\d{2}$")) return;
+                await Navigation.PushAsync(new CustomerResultsPage(ParkCode.ToUpper(), Arriving));
+            }
         }
     }
 }

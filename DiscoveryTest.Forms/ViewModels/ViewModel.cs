@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -7,6 +8,10 @@ namespace DiscoveryTest.Forms.ViewModels
 {
     public abstract class ViewModel : INotifyPropertyChanged
     {
+        private int busySemaphore;
+
+        public bool IsBusy => busySemaphore > 0;
+
         protected INavigation Navigation { get; }
 
         protected ViewModel(INavigation navigation)
@@ -27,6 +32,24 @@ namespace DiscoveryTest.Forms.ViewModels
             storage = value;
             RaisePropertyChanged(propertyName);
             return true;
+        }
+
+        protected IDisposable MakeBusy()
+        {
+            busySemaphore++;
+            return new InvokeOnDisposal(() => busySemaphore--);
+        }
+
+        private struct InvokeOnDisposal : IDisposable
+        {
+            private Action action;
+
+            public InvokeOnDisposal(Action action)
+            {
+                this.action = action;
+            }
+
+            public void Dispose() => action?.Invoke();
         }
     }
 }

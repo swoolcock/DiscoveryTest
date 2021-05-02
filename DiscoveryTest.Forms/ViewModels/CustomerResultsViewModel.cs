@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using DiscoveryTest.Core.Model;
 using DiscoveryTest.Core.Services;
 using DiscoveryTest.Forms.Views;
@@ -34,16 +35,24 @@ namespace DiscoveryTest.Forms.ViewModels
 
         private async void performSearch()
         {
-            var results = await restService.GetCustomersAsync(ParkCode, Arriving);
-            Customers.Clear();
-            foreach (var customer in results)
-                Customers.Add(customer);
+            if (IsBusy) return;
+            using (MakeBusy())
+            {
+                var results = await restService.GetCustomersAsync(ParkCode, Arriving);
+                Customers.Clear();
+                foreach (var customer in results)
+                    Customers.Add(customer);
+            }
         }
 
         private async void performCustomerTapped(object data)
         {
-            var customer = (CustomerDTO)data;
-            await Navigation.PushAsync(new SubmitResponsePage(customer));
+            if (IsBusy) return;
+            using (MakeBusy())
+            {
+                var customer = (CustomerDTO)data;
+                await Navigation.PushAsync(new SubmitResponsePage(customer));
+            }
         }
     }
 }

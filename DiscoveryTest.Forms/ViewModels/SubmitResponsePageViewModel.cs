@@ -33,10 +33,14 @@ namespace DiscoveryTest.Forms.ViewModels
         
         private async void performSubmit()
         {
-            // TODO: display error messages for validation
-            if (string.IsNullOrWhiteSpace(EmailAddress)) return;
-            await restService.PostResponseAsync(Customer.ReservationId, EmailAddress);
-            await Navigation.PopAsync();
+            if (IsBusy) return;
+            using (MakeBusy())
+            {
+                // TODO: display error messages for validation
+                if (string.IsNullOrWhiteSpace(EmailAddress)) return;
+                await restService.PostResponseAsync(Customer.ReservationId, EmailAddress);
+                await Navigation.PopAsync();
+            }
         }
     }
 }
