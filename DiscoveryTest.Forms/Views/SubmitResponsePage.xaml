@@ -4,7 +4,29 @@
              x:Class="DiscoveryTest.Forms.Views.SubmitResponsePage"
              Title="{Binding Title}">
     <StackLayout>
-        <Label Visual="Material" Text="{Binding Customer.Title}" />
+        <Grid Margin="10,10,10,10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20" />
+                <RowDefinition Height="20" />
+                <RowDefinition Height="20" />
+                <RowDefinition Height="20" />
+                <RowDefinition Height="20" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Text="Reservation ID" Grid.Row="0" Grid.Column="0" />
+            <Label Text="{Binding Customer.ReservationId}" Grid.Row="0" Grid.Column="1" />
+            <Label Text="Guest Name" Grid.Row="1" Grid.Column="0" />
+            <Label Text="{Binding Customer.GuestName}" Grid.Row="1" Grid.Column="1" />
+            <Label Text="Guest Mobile" Grid.Row="2" Grid.Column="0" />
+            <Label Text="{Binding Customer.GuestMobile}" Grid.Row="2" Grid.Column="1" />
+            <Label Text="Arriving" Grid.Row="3" Grid.Column="0" />
+            <Label Text="{Binding Customer.Arrived}" Grid.Row="3" Grid.Column="1" />
+            <Label Text="Departing" Grid.Row="4" Grid.Column="0" />
+            <Label Text="{Binding Customer.Depart}" Grid.Row="4" Grid.Column="1" />
+        </Grid>
         <Entry Visual="Material" Placeholder="Email Address" Text="{Binding EmailAddress}" />
         <Button Text="Submit" Command="{Binding Submit}" />
     </StackLayout>
