@@ -35,7 +35,7 @@ namespace DiscoveryTest.Forms.ViewModels
             if (string.IsNullOrWhiteSpace(ParkCode)) return;
             if (string.IsNullOrWhiteSpace(Arriving)) return;
             if (!Regex.IsMatch(Arriving, "^\\d{4}-\\d{2}-\\d{2}$")) return;
-            await Navigation.PushAsync(new CustomerResultsPage(ParkCode, Arriving));
+            await Navigation.PushAsync(new CustomerResultsPage(ParkCode.ToUpper(), Arriving));
         }
     }
 }

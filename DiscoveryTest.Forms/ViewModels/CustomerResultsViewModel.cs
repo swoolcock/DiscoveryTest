@@ -11,6 +11,8 @@ namespace DiscoveryTest.Forms.ViewModels
     {
         public ObservableCollection<CustomerDTO> Customers { get; } = new ObservableCollection<CustomerDTO>();
 
+        public string Title => $"{ParkCode}: {Arriving}";
+
         public string ParkCode { get; }
         public string Arriving { get; }
 
