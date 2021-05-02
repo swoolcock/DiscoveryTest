@@ -75,6 +75,6 @@ namespace DiscoveryTest.Core.Model
         public string Title => GuestName;
         
         [JsonIgnore]
-        public string Detail => $"Arrival: {Arrived}, Departure: {Depart}";
+        public string Detail => $"{Arrived} to {Depart} ({ReservationId})";
     }
 }

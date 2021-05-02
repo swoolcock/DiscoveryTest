@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Xamarin.Forms;
+using IContainer = DryIoc.IContainer;
 
 namespace DiscoveryTest.Forms.ViewModels
 {
@@ -11,12 +11,21 @@ namespace DiscoveryTest.Forms.ViewModels
         private int busySemaphore;
 
         public bool IsBusy => busySemaphore > 0;
+        public bool IsEnabled => !IsBusy;
 
-        protected INavigation Navigation { get; }
+        private string title = "";
 
-        protected ViewModel(INavigation navigation)
+        public string Title
         {
-            Navigation = navigation;
+            get => title;
+            set => SetProperty(ref title, value ?? "");
+        }
+        
+        protected IContainer Dependencies { get; }
+
+        protected ViewModel(IContainer dependencies)
+        {
+            Dependencies = dependencies;
         }
         
         public event PropertyChangedEventHandler PropertyChanged;
@@ -37,7 +46,14 @@ namespace DiscoveryTest.Forms.ViewModels
         protected IDisposable MakeBusy()
         {
             busySemaphore++;
-            return new InvokeOnDisposal(() => busySemaphore--);
+            RaisePropertyChanged(nameof(IsBusy));
+            RaisePropertyChanged(nameof(IsEnabled));
+            return new InvokeOnDisposal(() =>
+            {
+                busySemaphore--;
+                RaisePropertyChanged(nameof(IsBusy));
+                RaisePropertyChanged(nameof(IsEnabled));
+            });
         }
 
         private struct InvokeOnDisposal : IDisposable

@@ -1,6 +1,7 @@
 using System;
 using System.Globalization;
-using DiscoveryTest.Forms.Views;
+using DiscoveryTest.Forms.Services;
+using DryIoc;
 using Xamarin.Forms;
 
 namespace DiscoveryTest.Forms.ViewModels
@@ -26,8 +27,12 @@ namespace DiscoveryTest.Forms.ViewModels
         private Command searchCommand;
         public Command Search => searchCommand ??= new Command(performSearch);
 
-        public SearchPageViewModel(INavigation navigation) : base(navigation)
+        private readonly INavigationService navigationService;
+
+        public SearchPageViewModel(IContainer dependencies) : base(dependencies)
         {
+            Title = "Customer Search";
+            navigationService = Dependencies.Resolve<INavigationService>();
         }
         
         private async void performSearch()
@@ -40,8 +45,7 @@ namespace DiscoveryTest.Forms.ViewModels
                 if (string.IsNullOrWhiteSpace(Arriving)) return;
                 if (!DateTime.TryParseExact(Arriving, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out _)) return;
 
-                // if (!Regex.IsMatch(Arriving, "^\\d{4}-\\d{2}-\\d{2}$")) return;
-                await Navigation.PushAsync(new CustomerResultsPage(ParkCode.ToUpper(), Arriving));
+                await navigationService.PushAsync(new CustomerResultsPageViewModel(Dependencies, ParkCode.ToUpper(), Arriving));
             }
         }
     }

@@ -1,14 +1,10 @@
-﻿using DiscoveryTest.Core.Model;
-using DiscoveryTest.Forms.ViewModels;
-
-namespace DiscoveryTest.Forms.Views
+﻿namespace DiscoveryTest.Forms.Views
 {
     public partial class SubmitResponsePage
     {
-        public SubmitResponsePage(CustomerDTO customer)
+        public SubmitResponsePage()
         {
             InitializeComponent();
-            BindingContext = new SubmitResponsePageViewModel(Navigation, customer);
         }
     }
 }

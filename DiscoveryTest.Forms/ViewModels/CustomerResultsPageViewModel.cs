@@ -1,13 +1,13 @@
 using System.Collections.ObjectModel;
 using DiscoveryTest.Core.Model;
 using DiscoveryTest.Core.Services;
-using DiscoveryTest.Forms.Views;
+using DiscoveryTest.Forms.Services;
 using DryIoc;
 using Xamarin.Forms;
 
 namespace DiscoveryTest.Forms.ViewModels
 {
-    public class CustomerResultsViewModel : ViewModel
+    public class CustomerResultsPageViewModel : ViewModel
     {
         private const string defaultStatusText = "Loading...";
         private const string noResultsStatusText = "No results found.";
@@ -22,12 +22,11 @@ namespace DiscoveryTest.Forms.ViewModels
         
         public ObservableCollection<CustomerDTO> Customers { get; } = new ObservableCollection<CustomerDTO>();
 
-        public string Title => $"{ParkCode}: {Arriving}";
-
         public string ParkCode { get; }
         public string Arriving { get; }
 
         private readonly IRestService restService;
+        private readonly INavigationService navigationService;
         
         private Command customerTappedCommand;
         public Command CustomerTapped => customerTappedCommand ??= new Command(performCustomerTapped);
@@ -35,12 +34,15 @@ namespace DiscoveryTest.Forms.ViewModels
         private Command searchCommand;
         public Command Search => searchCommand ??= new Command(performSearch);
         
-        public CustomerResultsViewModel(INavigation navigation, string parkCode, string arriving) : base(navigation)
+        public CustomerResultsPageViewModel(IContainer dependencies, string parkCode, string arriving) : base(dependencies)
         {
             ParkCode = parkCode;
             Arriving = arriving;
+            
+            Title = $"{ParkCode}: {Arriving}";
 
-            restService = App.Dependencies.Resolve<IRestService>();
+            restService = Dependencies.Resolve<IRestService>();
+            navigationService = Dependencies.Resolve<INavigationService>();
         }
 
         private async void performSearch()
@@ -49,7 +51,10 @@ namespace DiscoveryTest.Forms.ViewModels
             using (MakeBusy())
             {
                 var results = await restService.GetCustomersAsync(ParkCode, Arriving);
+
                 Customers.Clear();
+                //RaisePropertyChanged(nameof(Customers));
+
                 foreach (var customer in results)
                     Customers.Add(customer);
                 
@@ -63,7 +68,7 @@ namespace DiscoveryTest.Forms.ViewModels
             using (MakeBusy())
             {
                 var customer = (CustomerDTO)data;
-                await Navigation.PushAsync(new SubmitResponsePage(customer));
+                await navigationService.PushAsync(new SubmitResponsePageViewModel(Dependencies, customer));
             }
         }
     }

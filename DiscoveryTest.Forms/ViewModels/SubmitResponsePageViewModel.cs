@@ -1,5 +1,6 @@
 using DiscoveryTest.Core.Model;
 using DiscoveryTest.Core.Services;
+using DiscoveryTest.Forms.Services;
 using DryIoc;
 using Xamarin.Forms;
 
@@ -8,8 +9,6 @@ namespace DiscoveryTest.Forms.ViewModels
     public class SubmitResponsePageViewModel : ViewModel
     {
         public CustomerDTO Customer { get; }
-
-        public string Title => $"Submit to: {Customer.GuestName}";
 
         private string emailAddress = "";
 
@@ -23,12 +22,16 @@ namespace DiscoveryTest.Forms.ViewModels
         public Command Submit => submitCommand ??= new Command(performSubmit);
 
         private readonly IRestService restService;
+        private readonly INavigationService navigationService;
         
-        public SubmitResponsePageViewModel(INavigation navigation, CustomerDTO customer) : base(navigation)
+        public SubmitResponsePageViewModel(IContainer dependencies, CustomerDTO customer) : base(dependencies)
         {
             Customer = customer;
-
-            restService = App.Dependencies.Resolve<IRestService>();
+            
+            Title = $"Submit to: {Customer.GuestName}";
+        
+            restService = Dependencies.Resolve<IRestService>();
+            navigationService = Dependencies.Resolve<INavigationService>();
         }
         
         private async void performSubmit()
@@ -39,7 +42,7 @@ namespace DiscoveryTest.Forms.ViewModels
                 // TODO: display error messages for validation
                 if (string.IsNullOrWhiteSpace(EmailAddress)) return;
                 await restService.PostResponseAsync(Customer.ReservationId, EmailAddress);
-                await Navigation.PopAsync();
+                await navigationService.PopAsync();
             }
         }
     }
