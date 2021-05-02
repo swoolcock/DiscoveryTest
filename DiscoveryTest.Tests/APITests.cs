@@ -12,6 +12,7 @@ namespace DiscoveryTest.Tests
         [SetUp]
         public void Setup()
         {
+            // TODO: use a proper mocked API
             restService = new DiscoveryRestService();
         }
 

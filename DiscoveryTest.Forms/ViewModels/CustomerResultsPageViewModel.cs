@@ -7,6 +7,9 @@ using Xamarin.Forms;
 
 namespace DiscoveryTest.Forms.ViewModels
 {
+    /// <summary>
+    /// View model for CustomerResultsPage.
+    /// </summary>
     public class CustomerResultsPageViewModel : ViewModel
     {
         private const string defaultStatusText = "Loading...";
@@ -53,7 +56,6 @@ namespace DiscoveryTest.Forms.ViewModels
                 var results = await restService.GetCustomersAsync(ParkCode, Arriving);
 
                 Customers.Clear();
-                //RaisePropertyChanged(nameof(Customers));
 
                 foreach (var customer in results)
                     Customers.Add(customer);

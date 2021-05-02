@@ -6,6 +6,9 @@ using Xamarin.Forms;
 
 namespace DiscoveryTest.Forms.ViewModels
 {
+    /// <summary>
+    /// View model for SubmitResponsePage.
+    /// </summary>
     public class SubmitResponsePageViewModel : ViewModel
     {
         private const string requiredFieldErrorMessage = "Required field.";

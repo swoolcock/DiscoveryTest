@@ -5,6 +5,9 @@ using Xamarin.Forms;
 
 namespace DiscoveryTest.Forms.Services
 {
+    /// <summary>
+    /// Concrete implementation of <see cref="INavigationService"/> for real UI navigation.
+    /// </summary>
     public class NavigationService : INavigationService
     {
         private readonly IViewLocator viewLocator;

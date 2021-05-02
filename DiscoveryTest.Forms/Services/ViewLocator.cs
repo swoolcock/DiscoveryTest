@@ -6,6 +6,9 @@ using Xamarin.Forms;
 
 namespace DiscoveryTest.Forms.Services
 {
+    /// <summary>
+    /// Concrete implementation of <see cref="IViewLocator"/>.
+    /// </summary>
     public class ViewLocator : IViewLocator
     {
         private readonly Dictionary<Type, Type> registrations = new Dictionary<Type, Type>();

@@ -9,6 +9,9 @@ using Newtonsoft.Json;
 
 namespace DiscoveryTest.Core.Services
 {
+    /// <summary>
+    /// Concrete implementation of <see cref="IRestService"/> that hits the real API.
+    /// </summary>
     public class DiscoveryRestService : IRestService
     {
         private const string api_host = "discoverycodetest.azurewebsites.net";

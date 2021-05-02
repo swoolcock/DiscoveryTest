@@ -4,6 +4,9 @@ using DiscoveryTest.Core.Model;
 
 namespace DiscoveryTest.Core.Services
 {
+    /// <summary>
+    /// Interface that allows mocking of the API.
+    /// </summary>
     public interface IRestService
     {
         Task<IEnumerable<CustomerDTO>> GetCustomersAsync(string parkCode, string arriving);

@@ -6,6 +6,10 @@ using IContainer = DryIoc.IContainer;
 
 namespace DiscoveryTest.Forms.ViewModels
 {
+    /// <summary>
+    /// Base class of all view models.
+    /// Provides support for <see cref="INotifyPropertyChanged"/> and handling of "busy" status.
+    /// </summary>
     public abstract class ViewModel : INotifyPropertyChanged
     {
         private int busySemaphore;
