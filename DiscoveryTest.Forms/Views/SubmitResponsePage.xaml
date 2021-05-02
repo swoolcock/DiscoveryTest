@@ -33,6 +33,6 @@
         <Label Text="{Binding EmailAddressErrorMessage}" TextColor="Red"
                AbsoluteLayout.LayoutBounds="1,170" AbsoluteLayout.LayoutFlags="XProportional" />
         <Button Text="Submit" Command="{Binding Submit}"
-                AbsoluteLayout.LayoutBounds="0,200,1,-1" AbsoluteLayout.LayoutFlags="WidthProportional" />
+                AbsoluteLayout.LayoutBounds="0,220,1,-1" AbsoluteLayout.LayoutFlags="WidthProportional" />
     </AbsoluteLayout>
 </ContentPage>

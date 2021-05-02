@@ -31,7 +31,7 @@ namespace DiscoveryTest.Core.Services
             return Enumerable.Empty<CustomerDTO>();
         }
 
-        public async Task PostResponseAsync(string resId, string userEmail)
+        public async Task<Dictionary<string, string>> PostResponseAsync(string resId, string userEmail)
         {
             var uri = new Uri(postResponseEndpoint());
             var body = JsonConvert.SerializeObject(new Dictionary<string, string>
@@ -42,10 +42,11 @@ namespace DiscoveryTest.Core.Services
             var content = new StringContent(body, Encoding.UTF8, "application/json");
             var response = await client.PostAsync(uri, content);
 
-            if (!response.IsSuccessStatusCode)
-            {
-                // TODO: throw an exception
-            }
+            if (response.IsSuccessStatusCode)
+                return null;
+            
+            var responseString = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<Dictionary<string, string>>(responseString);
         }
     }
 }

@@ -7,6 +7,6 @@ namespace DiscoveryTest.Core.Services
     public interface IRestService
     {
         Task<IEnumerable<CustomerDTO>> GetCustomersAsync(string parkCode, string arriving);
-        Task PostResponseAsync(string resId, string userEmail);
+        Task<Dictionary<string, string>> PostResponseAsync(string resId, string userEmail);
     }
 }

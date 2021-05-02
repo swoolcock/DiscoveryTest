@@ -59,7 +59,13 @@ namespace DiscoveryTest.Forms.ViewModels
                     return;
                 }
                 
-                await restService.PostResponseAsync(Customer.ReservationId, EmailAddress);
+                var response = await restService.PostResponseAsync(Customer.ReservationId, EmailAddress);
+                if (response != null && response.TryGetValue("detail", out var detail))
+                {
+                    EmailAddressErrorMessage = detail;
+                    return;
+                }
+                
                 await navigationService.PopAsync();
             }
         }
