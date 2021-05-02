@@ -1,5 +1,4 @@
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 using DiscoveryTest.Core.Model;
 using DiscoveryTest.Core.Services;
 using DiscoveryTest.Forms.Views;
@@ -10,6 +9,17 @@ namespace DiscoveryTest.Forms.ViewModels
 {
     public class CustomerResultsViewModel : ViewModel
     {
+        private const string defaultStatusText = "Loading...";
+        private const string noResultsStatusText = "No results found.";
+        
+        private string statusText = defaultStatusText;
+
+        public string StatusText
+        {
+            get => statusText;
+            set => SetProperty(ref statusText, value ?? "");
+        }
+        
         public ObservableCollection<CustomerDTO> Customers { get; } = new ObservableCollection<CustomerDTO>();
 
         public string Title => $"{ParkCode}: {Arriving}";
@@ -42,6 +52,8 @@ namespace DiscoveryTest.Forms.ViewModels
                 Customers.Clear();
                 foreach (var customer in results)
                     Customers.Add(customer);
+                
+                StatusText = Customers.Count == 0 ? noResultsStatusText : "";
             }
         }
 

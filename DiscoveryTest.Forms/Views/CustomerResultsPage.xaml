@@ -9,16 +9,19 @@
             <behaviors:InvokeCommandAction Command="{Binding Search}" />
         </behaviors:EventHandlerBehavior>
     </ContentPage.Behaviors>
-    <ListView ItemsSource="{Binding Customers}" Visual="Material" SelectionMode="None">
-        <ListView.Behaviors>
-            <behaviors:EventHandlerBehavior EventName="ItemTapped">
-                <behaviors:InvokeCommandAction Command="{Binding CustomerTapped}" Converter="{StaticResource TappedItemConverter}"/>
-            </behaviors:EventHandlerBehavior>
-        </ListView.Behaviors>
-        <ListView.ItemTemplate>
-            <DataTemplate>
-                <TextCell Text="{Binding Title}" Detail="{Binding Detail}" />
-            </DataTemplate>
-        </ListView.ItemTemplate>
-    </ListView>
+    <AbsoluteLayout>
+        <Label Text="{Binding StatusText}" AbsoluteLayout.LayoutBounds="0.5,50" AbsoluteLayout.LayoutFlags="XProportional" />
+        <ListView ItemsSource="{Binding Customers}" Visual="Material" SelectionMode="None" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+            <ListView.Behaviors>
+                <behaviors:EventHandlerBehavior EventName="ItemTapped">
+                    <behaviors:InvokeCommandAction Command="{Binding CustomerTapped}" Converter="{StaticResource TappedItemConverter}"/>
+                </behaviors:EventHandlerBehavior>
+            </ListView.Behaviors>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding Title}" Detail="{Binding Detail}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </AbsoluteLayout>
 </ContentPage>
