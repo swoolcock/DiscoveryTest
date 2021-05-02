@@ -4,8 +4,8 @@
              x:Class="DiscoveryTest.Forms.Views.SubmitResponsePage"
              Title="{Binding Title}"
              IsEnabled="{Binding IsEnabled}">
-    <StackLayout>
-        <Grid Margin="10,10,10,10">
+    <AbsoluteLayout Margin="5">
+        <Grid Margin="5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="20" />
                 <RowDefinition Height="20" />
@@ -28,7 +28,11 @@
             <Label Text="Departing" Grid.Row="4" Grid.Column="0" />
             <Label Text="{Binding Customer.Depart}" Grid.Row="4" Grid.Column="1" />
         </Grid>
-        <Entry Visual="Material" Placeholder="Email Address" Text="{Binding EmailAddress}" />
-        <Button Text="Submit" Command="{Binding Submit}" />
-    </StackLayout>
+        <Entry Visual="Material" Placeholder="Email Address" Text="{Binding EmailAddress}"
+               AbsoluteLayout.LayoutBounds="0,150,1,-1" AbsoluteLayout.LayoutFlags="WidthProportional" />
+        <Label Text="{Binding EmailAddressErrorMessage}" TextColor="Red"
+               AbsoluteLayout.LayoutBounds="1,170" AbsoluteLayout.LayoutFlags="XProportional" />
+        <Button Text="Submit" Command="{Binding Submit}"
+                AbsoluteLayout.LayoutBounds="0,200,1,-1" AbsoluteLayout.LayoutFlags="WidthProportional" />
+    </AbsoluteLayout>
 </ContentPage>

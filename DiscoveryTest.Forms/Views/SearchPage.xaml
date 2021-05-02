@@ -4,9 +4,16 @@
              x:Class="DiscoveryTest.Forms.Views.SearchPage"
              Title="{Binding Title}"
              IsEnabled="{Binding IsEnabled}">
-    <StackLayout>
-        <Entry Visual="Material" Placeholder="Park Code" Text="{Binding ParkCode}" TextTransform="Uppercase" />
-        <Entry Visual="Material" Placeholder="Arriving (YYYY-MM-DD)" Text="{Binding Arriving}" />
-        <Button Text="Search" Command="{Binding Search}" />
-    </StackLayout>
+    <AbsoluteLayout Margin="5">
+        <Entry Visual="Material" Placeholder="Park Code" Text="{Binding ParkCode}" TextTransform="Uppercase"
+               AbsoluteLayout.LayoutBounds="0,0,1,-1" AbsoluteLayout.LayoutFlags="WidthProportional" />
+        <Label Text="{Binding ParkCodeErrorMessage}" TextColor="Red"
+               AbsoluteLayout.LayoutBounds="1,20" AbsoluteLayout.LayoutFlags="XProportional" />
+        <Entry Visual="Material" Placeholder="Arriving (YYYY-MM-DD)" Text="{Binding Arriving}"
+               AbsoluteLayout.LayoutBounds="0,80,1,-1" AbsoluteLayout.LayoutFlags="WidthProportional" />
+        <Label Text="{Binding ArrivingErrorMessage}" TextColor="Red"
+               AbsoluteLayout.LayoutBounds="1,100" AbsoluteLayout.LayoutFlags="XProportional" />
+        <Button Text="Search" Command="{Binding Search}"
+               AbsoluteLayout.LayoutBounds="0,160,1,-1" AbsoluteLayout.LayoutFlags="WidthProportional" />
+    </AbsoluteLayout>
 </ContentPage>

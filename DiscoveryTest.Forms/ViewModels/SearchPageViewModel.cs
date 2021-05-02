@@ -8,12 +8,19 @@ namespace DiscoveryTest.Forms.ViewModels
 {
     public class SearchPageViewModel : ViewModel
     {
+        private const string requiredFieldErrorMessage = "Required field.";
+        private const string invalidDateFormatErrorMessage = "Invalid date format.";
+        
         private string parkCode = "";
 
         public string ParkCode
         {
             get => parkCode;
-            set => SetProperty(ref parkCode, value ?? "");
+            set
+            {
+                SetProperty(ref parkCode, value ?? "");
+                ParkCodeErrorMessage = "";
+            }
         }
 
         private string arriving = "";
@@ -21,7 +28,27 @@ namespace DiscoveryTest.Forms.ViewModels
         public string Arriving
         {
             get => arriving;
-            set => SetProperty(ref arriving, value ?? "");
+            set
+            {
+                SetProperty(ref arriving, value ?? "");
+                ArrivingErrorMessage = "";
+            }
+        }
+
+        private string parkCodeErrorMessage = "";
+
+        public string ParkCodeErrorMessage
+        {
+            get => parkCodeErrorMessage;
+            set => SetProperty(ref parkCodeErrorMessage, value ?? "");
+        }
+        
+        private string arrivingErrorMessage = "";
+
+        public string ArrivingErrorMessage
+        {
+            get => arrivingErrorMessage;
+            set => SetProperty(ref arrivingErrorMessage, value ?? "");
         }
 
         private Command searchCommand;
@@ -40,12 +67,27 @@ namespace DiscoveryTest.Forms.ViewModels
             if (IsBusy) return;
             using (MakeBusy())
             {
-                // TODO: display error messages for validation
-                if (string.IsNullOrWhiteSpace(ParkCode)) return;
-                if (string.IsNullOrWhiteSpace(Arriving)) return;
-                if (!DateTime.TryParseExact(Arriving, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out _)) return;
+                bool valid = true;
+                if (string.IsNullOrWhiteSpace(ParkCode))
+                {
+                    ParkCodeErrorMessage = requiredFieldErrorMessage;
+                    valid = false;
+                }
 
-                await navigationService.PushAsync(new CustomerResultsPageViewModel(Dependencies, ParkCode.ToUpper(), Arriving));
+                if (string.IsNullOrWhiteSpace(Arriving))
+                {
+                    ArrivingErrorMessage = requiredFieldErrorMessage;
+                    valid = false;
+                }
+                else if (!DateTime.TryParseExact(Arriving, "yyyy-MM-dd", CultureInfo.InvariantCulture,
+                    DateTimeStyles.None, out _))
+                {
+                    ArrivingErrorMessage = invalidDateFormatErrorMessage;
+                    valid = false;
+                }
+
+                if (valid)
+                    await navigationService.PushAsync(new CustomerResultsPageViewModel(Dependencies, ParkCode.ToUpper(), Arriving));
             }
         }
     }

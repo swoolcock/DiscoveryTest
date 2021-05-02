@@ -8,6 +8,8 @@ namespace DiscoveryTest.Forms.ViewModels
 {
     public class SubmitResponsePageViewModel : ViewModel
     {
+        private const string requiredFieldErrorMessage = "Required field.";
+        
         public CustomerDTO Customer { get; }
 
         private string emailAddress = "";
@@ -15,7 +17,19 @@ namespace DiscoveryTest.Forms.ViewModels
         public string EmailAddress
         {
             get => emailAddress;
-            set => SetProperty(ref emailAddress, value ?? "");
+            set
+            {
+                SetProperty(ref emailAddress, value ?? "");
+                EmailAddressErrorMessage = "";
+            }
+        }
+
+        private string emailAddressErrorMessage = "";
+
+        public string EmailAddressErrorMessage
+        {
+            get => emailAddressErrorMessage;
+            set => SetProperty(ref emailAddressErrorMessage, value ?? "");
         }
 
         private Command submitCommand;
@@ -39,8 +53,12 @@ namespace DiscoveryTest.Forms.ViewModels
             if (IsBusy) return;
             using (MakeBusy())
             {
-                // TODO: display error messages for validation
-                if (string.IsNullOrWhiteSpace(EmailAddress)) return;
+                if (string.IsNullOrWhiteSpace(EmailAddress))
+                {
+                    EmailAddressErrorMessage = requiredFieldErrorMessage;
+                    return;
+                }
+                
                 await restService.PostResponseAsync(Customer.ReservationId, EmailAddress);
                 await navigationService.PopAsync();
             }
