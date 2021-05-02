@@ -1,31 +1,33 @@
-﻿using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
-
-[assembly: XamlCompilation(XamlCompilationOptions.Compile)]
+﻿using DiscoveryTest.Core.Services;
+using DiscoveryTest.Forms.Views;
+using DryIoc;
+using Xamarin.Forms;
 
 namespace DiscoveryTest.Forms
 {
-    public partial class App : Application
+    public partial class App
     {
+        public static Container Dependencies { get; } = new Container();
+        
         public App()
         {
             InitializeComponent();
-            MainPage = new MainPage();
+            
+            Dependencies.Register<IRestService, DiscoveryRestService>();
+            
+            MainPage = new NavigationPage(new SearchPage());
         }
 
         protected override void OnStart()
         {
-            // Handle when your app starts
         }
 
         protected override void OnSleep()
         {
-            // Handle when your app sleeps
         }
 
         protected override void OnResume()
         {
-            // Handle when your app resumes
         }
     }
 }

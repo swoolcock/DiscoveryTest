@@ -1,19 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
         <LangVersion>8</LangVersion>
     </PropertyGroup>
-
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
         <DebugType>pdbonly</DebugType>
         <DebugSymbols>true</DebugSymbols>
     </PropertyGroup>
-
     <ItemGroup>
-        <PackageReference Include="Xamarin.Forms" Version="4.4.0.991640" />
+        <PackageReference Include="Behaviors.Forms" Version="1.4.0" />
+        <PackageReference Include="DryIoc" Version="4.7.6" />
+        <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
+        <PackageReference Include="Xamarin.Forms.Visual.Material" Version="5.0.0.2012" />
     </ItemGroup>
-
     <ItemGroup>
       <ProjectReference Include="..\DiscoveryTest.Core\DiscoveryTest.Core.csproj" />
     </ItemGroup>

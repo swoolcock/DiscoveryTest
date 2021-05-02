@@ -1,4 +1,6 @@
 ﻿using System;
+using Newtonsoft.Json;
+
 namespace DiscoveryTest.Core.Model
 {
     public class CustomerDTO : IEquatable<CustomerDTO>
@@ -68,5 +70,11 @@ namespace DiscoveryTest.Core.Model
                    PreviousNPS == other.PreviousNPS &&
                    PreviousNPSComment == other.PreviousNPSComment;
         }
+
+        [JsonIgnore]
+        public string Title => GuestName;
+        
+        [JsonIgnore]
+        public string Detail => $"Arrival: {Arrived}, Departure: {Depart}";
     }
 }

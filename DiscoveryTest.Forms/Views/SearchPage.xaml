@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DiscoveryTest.Forms.Views.SearchPage">
+    <StackLayout>
+        <Entry x:Name="SearchParkCode" Visual="Material" Placeholder="Park Code" Text="{Binding ParkCode}" TextTransform="Uppercase" />
+        <Entry x:Name="SearchArriving" Visual="Material" Placeholder="Arriving (YYYY-MM-DD)" Text="{Binding Arriving}" />
+        <Button Text="Search" Command="{Binding Search}" />
+    </StackLayout>
+</ContentPage>
